@@ -1,0 +1,24 @@
+[package]
+name = "razdisk"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+eframe = "0.29"
+rfd = "0.15"
+encoding_rs = "0.8"
+windows = { version = "0.58", features = [
+    "Win32_Foundation",
+    "Win32_Storage_FileSystem",
+    "Win32_System_IO",
+    "Win32_System_Ioctl",
+    "Win32_UI_Shell",
+] }
+
+[build-dependencies]
+embed-resource = "2.5"
+
+[profile.release]
+opt-level = "z"
+lto = true
+strip = true

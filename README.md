@@ -1,6 +1,5 @@
 # RazDisk — High-Performance Windows Storage Utility
 
-> **Statut du projet :** En phase de finalisation (Release V1.x)  
 > **Méthodologie :** Pilotage itératif et prototypage accéléré assisté par IA  
 > **Cible :** Administrateurs système, techniciens et utilisateurs avancés sous Windows  
 
@@ -61,11 +60,15 @@ Ce projet s'inscrit dans un processus de développement basé sur un cycle court
 ### Compilation
 
 # Cloner le dépôt
+```bash
 git clone [https://github.com/ChatCarbo/razdisk.git](https://github.com/ChatCarbo/razdisk.git)
 cd razdisk
+```
 
 # Compiler l'exécutable optimisé en mode release
+```bash
 cargo build --release
+```
 
-### avertissement de Sécurité
+## avertissement de Sécurité
 Cet outil effectue des modifications directes sur les tables de partitions des supports physiques connectés. Une mauvaise manipulation sur un disque cible peut entraîner une perte définitive de données. L'utilisateur est seul responsable de la vérification de la sélection du lecteur avant toute opération de formatage.

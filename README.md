@@ -70,5 +70,5 @@ cd razdisk
 cargo build --release
 ```
 
-## avertissement de Sécurité
+# Avertissement de Sécurité
 Cet outil effectue des modifications directes sur les tables de partitions des supports physiques connectés. Une mauvaise manipulation sur un disque cible peut entraîner une perte définitive de données. L'utilisateur est seul responsable de la vérification de la sélection du lecteur avant toute opération de formatage.

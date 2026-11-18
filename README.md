@@ -51,7 +51,7 @@ Ce projet s'inscrit dans un processus de développement basé sur un cycle court
 
 ---
 
-## 📦 Installation & Utilisation (
+## 📦 Installation & Utilisation
 
 ### Prérequis
 * Système d'exploitation : Windows 10 / 11 (x64)

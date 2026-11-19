@@ -1,0 +1,15 @@
+# RazDisk — correctifs
+- **Ne compilait pas** : les chemins `\\.\PhysicalDrive{}` et `\\.\{}:` avaient des barres obliques inverses invalides (`"\\.\Physical…"`). Ils sont écrits en chaînes brutes `r"\\.\PhysicalDrive{}"`.
+- `build.rs` ajouté (il manquait, alors que `Cargo.toml` déclare `embed-resource`) : embarque le manifeste administrateur et l'icône.
+- `icon.ico` ajouté (référencé par `razdisk.rc` mais absent de l'archive).
+- Plus de fenêtre console en version release.
+- Script `diskpart` temporaire avec un nom unique par processus.
+- README, `.gitignore` et description du paquet ajoutés.
+- Lecture de la sortie de `format` : correction de l'erreur de compilation (déplacement partiel de `fmt_child`), lecture en octets bruts décodés en Windows-1252 et découpés sur `\r` et `\n` (avant : les lignes accentuées étaient perdues et la progression pouvait être ignorée).
+- Icône de la fenêtre (`with_icon`) : dessinée en code, identique à `icon.ico` (avant : icône egui par défaut).
+- Erreur diskpart : l'en-tête (version, copyright, nom de l'ordinateur) est retiré et le vrai message d'erreur s'affiche, décodé en page de code OEM 850 (accents corrects), avec le code de sortie et la liste des commandes exécutées. Une erreur annoncée dans le texte est aussi détectée si le code de sortie est 0.
+- **Échec « Aucun volume n'est spécifié »** : `assign` échouait car aucun volume n'est sélectionné après `create partition` (Windows attribue lui-même la lettre d'un support amovible). Supprimé ; on attend la lettre, et si besoin on l'attribue explicitement à la nouvelle partition.
+- **Sécurité des données** : le formatage ciblait « la première lettre du disque », qui pouvait être une partition **conservée**. La nouvelle partition est maintenant identifiée par sa position de départ, et sa lettre par (disque, numéro de partition) ; on ne formate rien d'autre.
+- Suppression de plusieurs partitions par numéros décroissants (diskpart peut renuméroter après chaque suppression, ce qui aurait pu supprimer la mauvaise partition).
+- **« Lancement format: program not found »** : `format` est `format.com`, que Rust ne trouve pas avec `Command::new("format")` (il ne cherche que les `.exe`). Appel par le chemin complet `%SystemRoot%\System32\format.com`.
+- **Interface bilingue FR / EN** : sélecteur « FR / EN » en haut à droite de la fenêtre (à côté d'« Actualiser »). Au lancement, la langue de Windows est utilisée (français si Windows est en français, anglais sinon). Tous les textes sont traduits : menus, boutons, confirmation, progression et messages d'erreur. Changer de langue efface le message de statut affiché. Ajout de la fonctionnalité `Win32_Globalization` à la crate `windows` (Cargo.toml).
